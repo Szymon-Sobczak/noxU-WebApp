@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block content %}
+
+<div
+  class="container d-flex align-items-center justify-content-center"
+  style="height: 80vh"
+>
+  <div class="shadow p-3 mb-5 bg-white rounded">
+    <img
+      class="scaled-image"
+      src="{{ url_for('static', filename='noxu-logo.png') }}"
+      alt="CheckMark"
+    />
+
+    <form action="" method="POST">
+      {{ form.csrf_token }}
+      <div class="form-group" style="margin-top: 20px">
+        {{ form.username.label }} {{ form.username(class_="form-control",
+        size=32) }}
+      </div>
+      <div class="form-group" style="margin-top: 20px">
+        {{ form.password.label }} {{ form.password(class_="form-control",
+        size=32) }}
+      </div>
+      {{ form.submit(class_="btn btn-primary", style_="margin-top:20px;
+      margin-bottom: 10px") }}
+    </form>
+
+    <style>
+      .scaled-image {
+        width: 400px;
+        height: auto;
+      }
+    </style>
+
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for
+    message in messages %} {{ message }}<br />
+    {% endfor %} {% endif %} {% endwith %}
+  </div>
+</div>
+{% endblock %}
