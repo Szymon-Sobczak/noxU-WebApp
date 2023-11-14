@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block buttons%}
+<a
+  href="{{ url_for('account.logout' )}}"
+  class="btn btn-outline-primary d-flex"
+  style="margin-right: 15px"
+  type="button"
+  >Logout</a
+>
+{% endblock %} {% block content %}
+<div
+  class="container d-flex align-items-center justify-content-center"
+  style="height: 80vh"
+>
+  <p>"ADMIN PAGE!"</p>
+</div>
+{% endblock %}
