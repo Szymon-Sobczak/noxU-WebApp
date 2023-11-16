@@ -4,7 +4,7 @@ import json
 from flask import Blueprint
 from flask import current_app as app
 from flask import flash, redirect, render_template, request, session, url_for
-from flask_login import current_user, login_required, login_user, LoginManager, logout_user
+from flask_login import current_user, login_required, login_user, logout_user
 from forms.user_forms import LoginForm
 import requests
 from routers.admin import Admin
@@ -20,32 +20,29 @@ def login():
     backend_uri = app.config['BACKEND_URI']
     form = LoginForm()
 
-    # if current_user.is_authenticated and sessionget.get('is_admin'):
-    #     if current_user.employee_json.get('is_admin'):
-    #         return redirect(url_for('admin.profile'))
-    #     else:
-    #         return redirect(url_for('employee.profile'))
+    if current_user.is_authenticated:
+        if current_user.is_admin and session.get('is_admin'):
+            return redirect(url_for('admin.profile'))
+        else:
+            return redirect(url_for('employee.profile'))
 
     if form.validate_on_submit():
         error = None
         api_request = requests.get(
             url=f'{backend_uri}/api/users/username/{form.username.data}')
-
         if api_request.status_code == 404:
             error = "Wrong username."
         if error is None:
             user_json = json.loads(api_request.text)
-            print("*"*30)
-            print(user_json)
             if user_json.get('password') == form.password.data:
                 if user_json.get('is_admin'):
-                    current_user = Admin(user_json)
+                    user = Admin(user_json)
                     session['is_admin'] = True
-                    login_user(current_user)
+                    login_user(user)
                     return redirect(url_for('admin.profile'))
                 else:
-                    current_user = Employee(user_json)
-                    login_user(current_user)
+                    user = Employee(user_json)
+                    login_user(user)
                     return redirect(url_for('employee.profile'))
 
             else:

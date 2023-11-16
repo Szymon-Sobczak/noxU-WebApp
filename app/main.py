@@ -11,19 +11,19 @@ from routers.employee import Employee, employee_bp
 import requests
 
 app = Flask(__name__)
+
 Bootstrap(app)
 
 app.config['SECRET_KEY'] = 'def8fb9574fc58b0b55ae68f368eaa4703d59815d7bfccd03bb1fdb557626693'
 app.config['BACKEND_URI'] = "http://127.0.0.1:8000"
 
+app.register_blueprint(admin_bp)
+app.register_blueprint(employee_bp)
+app.register_blueprint(account_bp)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "account.login"
-
-app.register_blueprint(account_bp)
-app.register_blueprint(admin_bp)
-app.register_blueprint(employee_bp)
 
 
 @login_manager.user_loader
