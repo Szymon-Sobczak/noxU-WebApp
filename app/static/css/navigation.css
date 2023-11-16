@@ -35,18 +35,23 @@
     font-weight: bold;
     border-radius: 20px;
     font-size: 36px;
-    transition: background-color 0.4s;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    transition: background-color 0.4s, box-shadow 0.4s;
   }
 
-.btn.custom-btn-mainmenu:hover {
+.btn.custom-btn-mainmenu:hover, .btn.custom-btn-mainmenu:active, .btn.custom-btn-mainmenu:active:focus {
     background-color: #111111;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 18px 50px 0  rgba(0,0,0,0.19);
   }
 
-  .icon {
+
+.icon {
     font-size: 84px;
     margin-bottom: 24px;
   }
