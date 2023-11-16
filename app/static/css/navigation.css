@@ -51,6 +51,25 @@
   }
 
 
+/* Custom styling for custom-file-label */
+.custom-file-label::after {
+  content: "Browse"; /* Text to display on the button */
+}
+
+.custom-file-input:focus ~ .custom-file-label::after {
+  border-color: #66afe9; /* Highlight color when the input is focused */
+}
+
+.custom-file-label::after {
+  background-color: #f8f9fa; /* Background color for the button */
+  color: #495057; /* Text color for the button */
+  border: 1px solid #ced4da; /* Border color for the button */
+}
+
+.custom-file-input:disabled ~ .custom-file-label::after {
+  background-color: #e9ecef; /* Background color when the input is disabled */
+}
+
 .icon {
     font-size: 84px;
     margin-bottom: 24px;

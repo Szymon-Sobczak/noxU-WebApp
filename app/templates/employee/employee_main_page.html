@@ -11,10 +11,13 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6">
-      <button class="btn btn-primary custom-btn-mainmenu">
+      <a
+        href="{{ url_for('analyse.upload') }}"
+        class="btn btn-primary custom-btn-mainmenu"
+      >
         <i class="icon fa fa-camera"></i>
         <span>Analyse Order</span>
-      </button>
+      </a>
     </div>
     <div class="col-md-6">
       <button class="btn btn-primary custom-btn-mainmenu">

@@ -8,6 +8,8 @@ from forms.user_forms import LoginForm
 from routers.account import account_bp
 from routers.admin import Admin, admin_bp
 from routers.employee import Employee, employee_bp
+from routers.analyse import analyse_bp
+
 import requests
 
 app = Flask(__name__)
@@ -20,6 +22,7 @@ app.config['BACKEND_URI'] = "http://127.0.0.1:8000"
 app.register_blueprint(admin_bp)
 app.register_blueprint(employee_bp)
 app.register_blueprint(account_bp)
+app.register_blueprint(analyse_bp)
 
 login_manager = LoginManager()
 login_manager.init_app(app)

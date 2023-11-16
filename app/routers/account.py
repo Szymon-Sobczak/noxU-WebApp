@@ -21,6 +21,7 @@ def login():
     form = LoginForm()
 
     if current_user.is_authenticated:
+        print(current_user)
         if current_user.is_admin and session.get('is_admin'):
             return redirect(url_for('admin.profile'))
         else:
@@ -34,19 +35,24 @@ def login():
             error = "Wrong username."
         if error is None:
             user_json = json.loads(api_request.text)
-            if user_json.get('password') == form.password.data:
-                if user_json.get('is_admin'):
-                    user = Admin(user_json)
-                    session['is_admin'] = True
-                    login_user(user)
-                    return redirect(url_for('admin.profile'))
+            if user_json.get('is_active'):
+                if user_json.get('password') == form.password.data:
+                    if user_json.get('is_admin'):
+                        user = Admin(user_json)
+                        session['is_admin'] = True
+                        login_user(user)
+                        return redirect(url_for('admin.profile'))
+                    else:
+                        user = Employee(user_json)
+                        session['is_admin'] = False
+                        login_user(user)
+                        return redirect(url_for('employee.profile'))
                 else:
-                    user = Employee(user_json)
-                    login_user(user)
-                    return redirect(url_for('employee.profile'))
+                    error = "Wrong password"
 
             else:
-                error = "Wrong password"
+                error = "User blocked!"
+
         flash(error)
     else:
         print(form.errors)

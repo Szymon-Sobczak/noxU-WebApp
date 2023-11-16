@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block buttons%}
+<a
+  href="{{ url_for('account.logout' )}}"
+  class="btn btn-outline-primary custom-btn-yellow-outline d-flex"
+  style="margin-left: auto; margin-right: 20px; font-size: 20px"
+  type="button"
+  >Logout</a
+>
+{% endblock %} {% block content %}
+<div class="container-fluid my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="mb-3"></div>
+      <h1 class="text-center mb-4">Photo Upload</h1>
+      <form
+        action="{{ url_for('analyse.upload') }}"
+        method="post"
+        enctype="multipart/form-data"
+        class="text-center"
+      >
+        <div class="form-group mb-4">
+          <label for="formFile" class="form-label"
+            >Default file input example</label
+          >
+          <input
+            class="form-control form-control-lg"
+            type="file"
+            name="photo"
+            accept="image/*"
+            id="photoInput"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-success">Upload</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
