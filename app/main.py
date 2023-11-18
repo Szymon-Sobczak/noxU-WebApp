@@ -9,6 +9,7 @@ from routers.account import account_bp
 from routers.admin import Admin, admin_bp
 from routers.employee import Employee, employee_bp
 from routers.analyse import analyse_bp
+from flask_session import Session
 
 import requests
 
@@ -16,8 +17,10 @@ app = Flask(__name__)
 
 Bootstrap(app)
 
+
 app.config['SECRET_KEY'] = 'def8fb9574fc58b0b55ae68f368eaa4703d59815d7bfccd03bb1fdb557626693'
 app.config['BACKEND_URI'] = "http://127.0.0.1:8000"
+app.config['SESSION_TYPE'] = 'filesystem'
 
 app.register_blueprint(admin_bp)
 app.register_blueprint(employee_bp)
@@ -27,6 +30,8 @@ app.register_blueprint(analyse_bp)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "account.login"
+
+Session(app)
 
 
 @login_manager.user_loader

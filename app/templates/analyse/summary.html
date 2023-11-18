@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block buttons%}
+<a
+  href="{{ url_for('account.logout' )}}"
+  class="btn btn-outline-primary custom-btn-yellow-outline d-flex"
+  style="margin-left: auto; margin-right: 20px; font-size: 20px"
+  type="button"
+  >Logout</a
+>
+{% endblock %} {% block content %}
+<h1>Analysis Result</h1>
+
+{% if uploaded_photo %}
+<img
+  src="data:image/jpeg;base64,{{ uploaded_photo }}"
+  alt="Uploaded Photo"
+  style="width: 750px; height: 100%"
+/>
+{% else %}
+<p>No photo uploaded</p>
+{% endif %} {% if analysis_response %}
+<h2>Analysis Response:</h2>
+<p>{{ analysis_response }}</p>
+{% else %}
+<p>No analysis response available</p>
+{% endif %} {% endblock %}
