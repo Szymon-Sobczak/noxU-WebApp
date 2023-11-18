@@ -5,9 +5,28 @@
 }
 
 .btn.custom-btn-yellow {
-    background-color: #ffdc00; /* Replace with your desired shade of yellow */
-    color: #ffffff; /* Text color, you can adjust as needed */
+    width: 300px;
+    height: 100%;
+    border: none;
+    background-color: #ffdc00;
+    color: #111111;
+    font-family: "Baumans", serif;
+    font-weight: bold;
+    border-radius: 20px;
+    font-size: 36px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    transition: background-color 0.4s, box-shadow 0.4s;
+  }
+
+  .btn.custom-btn-yellow:hover, .btn.custom-btn-yellow:active, .btn.custom-btn-yellow:active:focus {
+    background-color: #111111;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 18px 50px 0  rgba(0,0,0,0.19);
   }
 
 .btn.custom-btn-yellow-outline {

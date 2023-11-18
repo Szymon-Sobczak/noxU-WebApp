@@ -1,0 +1,37 @@
+.list-group-item {
+    font-size: 24px; /* Adjust the font size */
+    border: 2px solid #ccc; /* Add a border to each list item */
+    margin-bottom: 8px; /* Add margin between list items */
+  }
+
+  /* Styles for 'ok' status */
+  .list-group-item.list-group-item-success {
+    background-color: #d4edda; /* Change background color for 'ok' status */
+    border-color: #c3e6cb; /* Change border color for 'ok' status */
+  }
+
+  /* Styles for 'nok' status */
+  .list-group-item.list-group-item-danger {
+    background-color: #f8d7da; /* Change background color for 'nok' status */
+    border-color: #f5c6cb; /* Change border color for 'nok' status */
+  }
+
+  .order-status-ok {
+    background-color: #28a745; 
+    border: 2px solid #28a745;
+    color: white; 
+    font-family: "Baumans", serif;
+    font-weight: bold;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+
+  .order-status-nok {
+    background: #dc3545; 
+    border: 2px solid #dc3545;
+    color: white; 
+    font-family: "Baumans", serif;
+    font-weight: bold;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }

@@ -7,19 +7,68 @@
   >Logout</a
 >
 {% endblock %} {% block content %}
-<h1>Analysis Result</h1>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6 text-center" style="overflow-y: auto">
+      <h2 class="baumans-header">Analysis Report:</h2>
+      <ul class="list-group">
+        {% for item, status in analysis_report.items() %}
+        <div
+          class="list-group-item {% if status == 'Ok.' %} list-group-item-success {% else %} list-group-item-danger {% endif %}"
+        >
+          {% if status == 'Ok.' %}
+          <i class="fas fa-check-circle text-success"></i>
+          {% else %}
+          <i class="fas fa-times-circle text-danger"></i>
+          {% endif %} {{ item }} - {{status}}
+        </div>
+        {% endfor %}
+      </ul>
+    </div>
 
-{% if uploaded_photo %}
-<img
-  src="data:image/jpeg;base64,{{ uploaded_photo }}"
-  alt="Uploaded Photo"
-  style="width: 750px; height: 100%"
-/>
-{% else %}
-<p>No photo uploaded</p>
-{% endif %} {% if analysis_response %}
-<h2>Analysis Response:</h2>
-<p>{{ analysis_response }}</p>
-{% else %}
-<p>No analysis response available</p>
-{% endif %} {% endblock %}
+    <div class="col-md-6">
+      {% if uploaded_photo %}
+      <img
+        src="data:image/jpeg;base64,{{ uploaded_photo }}"
+        alt="Uploaded Photo"
+        style="
+          max-width: 100%;
+          height: auto;
+          border-radius: 20px;
+          box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+            0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        "
+        class="img-fluid"
+      />
+      {% else %}
+      <p>No photo uploaded</p>
+      {% endif %}
+    </div>
+
+    <div class="col-md-6 mt-4 text-center">
+      <h2
+        class="border p-3 {% if analysis_status == 'ok' %} order-status-ok {% else %} order-status-nok {% endif %}"
+      >
+        Order Status: {{ analysis_status }}
+      </h2>
+    </div>
+
+    <div class="col-md-6 mt-4 text-center">
+      <div class="btn-group d-flex" role="group">
+        <a
+          href="{{ url_for('account.login')}}"
+          class="btn btn-primary custom-btn-yellow d-flex btn-lg mx-1 w-100"
+          type="button"
+          >Home</a
+        >
+        <a
+          href="{{ url_for('analyse.upload')}}"
+          class="btn btn-primary custom-btn-yellow d-flex btn-lg mx-1 w-100"
+          type="button"
+          >Next Analysis</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

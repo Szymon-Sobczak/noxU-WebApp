@@ -21,8 +21,8 @@ def draw_detection_boxes(raw_image: base64, detecion_result: list[dict]):
     font_size = 82
 
     for result in detecion_result:
-        x1, x2, y1, y2 = (result["box"].get("x1"), result["box"].get("x2"),
-                          result["box"].get("y1"), result["box"].get("y2"))
+        x1, x2, y1, y2 = (result.get("box").get("x1"), result.get("box").get("x2"),
+                          result.get("box").get("y1"), result.get("box").get("y2"))
         status, name = result.get("status"), result.get("name")
 
         font = ImageFont.load_default().font_variant(size=font_size)
@@ -68,10 +68,23 @@ def upload():
 @analyse_bp.route('/summary')
 @login_required
 def summary():
-    uploaded_photo = session.get('uploaded_photo')
+    photo = session.get('uploaded_photo')
     analysis_response = session.get('analysis_response')
 
-    analyse = json.loads(analysis_response)
-    photo = draw_detection_boxes(uploaded_photo, analyse)
+    analysis = json.loads(analysis_response)
+    print(analysis)
+    analysis_status = analysis.get("analysis").get("detection_result")
+    analysis_report = analysis.get("analysis").get("detection_report")
+    analysis_report = dict(sorted(analysis_report.items(),
+                                  key=lambda x: x[0].lower()))
+    print(analysis_report)
+    if analysis.get("detection_result"):
+        photo = draw_detection_boxes(photo,
+                                     analysis.get("detection_result"))
+    else:
+        photo = base64.b64encode(photo).decode('utf-8')
 
-    return render_template("analyse/summary.html", uploaded_photo=photo, analysis_response=analysis_response)
+    return render_template("analyse/summary.html",
+                           uploaded_photo=photo,
+                           analysis_status=analysis_status,
+                           analysis_report=analysis_report)
