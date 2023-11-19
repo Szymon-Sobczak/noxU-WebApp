@@ -1,8 +1,7 @@
 {% extends 'base.html' %} {% block buttons%}
 <a
   href="{{ url_for('account.logout' )}}"
-  class="btn btn-outline-primary custom-btn-yellow-outline d-flex"
-  style="margin-left: auto; margin-right: 20px; font-size: 20px"
+  class="btn btn-outline-primary logout-btn-yellow d-flex"
   type="button"
   >Logout</a
 >
@@ -33,11 +32,11 @@
     </div>
     <div class="col-md-6">
       <a
-        href="{{ url_for('account.logout' )}}"
+        href="{{ url_for('employee.orders' )}}"
         class="btn btn-primary custom-btn-mainmenu"
       >
-        <i class="icon fa fa-door-open"></i>
-        <span>Logout</span>
+        <i class="icon fa fa-box"></i>
+        <span>Orders</span>
       </a>
     </div>
   </div>

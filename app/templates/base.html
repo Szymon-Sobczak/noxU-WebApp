@@ -41,7 +41,12 @@
       data-bs-theme="dark"
     >
       <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('home') }}" style="">NoxU</a>
+        <a class="navbar-brand" href="{{ url_for('home') }}" style="">
+          <img
+            src="{{ url_for('static', filename='noxu-white-transparent.png') }}"
+            alt="NoxU Logo"
+            height="45"
+        /></a>
         <button
           class="navbar-toggler"
           type="button"

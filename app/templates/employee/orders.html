@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block buttons%}
+<a
+  href="{{ url_for('account.logout' )}}"
+  class="btn btn-outline-primary custom-btn-yellow-outline d-flex"
+  style="margin-left: auto; margin-right: 20px; font-size: 20px"
+  type="button"
+  >Logout</a
+>
+{% endblock %} {% block content %}
+<div class="container mt-5">
+  <h1 class="baumans-header">Order List:</h1>
+  <table class="table table-bordered">
+    <thead class="baumans-table-header">
+      <tr>
+        <th>Order Name</th>
+        <th>Creation Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+      <tr>
+        <td>{{ order['order_name'] }}</td>
+        <td>{{ order['creation_date'] }}</td>
+        <td>
+          <a
+            class="btn btn-primary custom-btn-yellow"
+            style="font-size: 20px"
+            href="{{ url_for('employee.generate_qrcode', order_name=order['order_name']) }}"
+          >
+            Generate QR Code <i class="fa fa-qrcode"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endblock %}
+</div>

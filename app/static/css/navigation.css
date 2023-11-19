@@ -46,6 +46,23 @@
     
   }
 
+  .btn.logout-btn-yellow {
+    border: 2px solid #ffdc00;
+    color: #ffdc00;
+    font-family: "Baumans", serif;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: auto; 
+    margin-right: 20px;
+    transition: background-color 0.3s;
+  }
+
+.btn.logout-btn-yellow:hover, .btn.logout-btn-yellow:active, .btn.logout-btn-yellow:active:focus  {
+    background-color: #ffdc00;
+    border: 2px solid #ffdc00;
+    color: #111111;
+    
+  }
 .btn.custom-btn-mainmenu {
     width: 100%;
     height: 300px;
