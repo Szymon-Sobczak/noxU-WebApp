@@ -3,7 +3,7 @@ import json
 from io import BytesIO
 from flask import Blueprint
 from flask import current_app as app
-from flask import flash, redirect, render_template, request, session, url_for
+from flask import flash, redirect, render_template, request, session, url_for, send_file
 from flask_login import current_user, login_required, login_user, logout_user, UserMixin
 from forms.user_forms import LoginForm
 import requests
@@ -58,7 +58,7 @@ def upload():
                                      files={"new_image": ("photo.jpg", photo_data, "image/jpeg")})
 
             session['uploaded_photo'] = photo_data
-            session['analysis_response'] = response.text
+            session['analysis_response'] = response
 
             return redirect(url_for('analyse.summary'))
 
@@ -69,22 +69,30 @@ def upload():
 @login_required
 def summary():
     photo = session.get('uploaded_photo')
-    analysis_response = session.get('analysis_response')
+    order_name = None
+    analysis_report = {}
+    response_status = session.get('analysis_response').status_code
+    analysis_response = session.get('analysis_response').text
 
+    alaysis_photo = base64.b64encode(photo).decode('utf-8')
+    print(analysis_response)
     analysis = json.loads(analysis_response)
     print(analysis)
-    analysis_status = analysis.get("analysis").get("detection_result")
-    analysis_report = analysis.get("analysis").get("detection_report")
-    analysis_report = dict(sorted(analysis_report.items(),
-                                  key=lambda x: x[0].lower()))
-    print(analysis_report)
-    if analysis.get("detection_result"):
-        photo = draw_detection_boxes(photo,
-                                     analysis.get("detection_result"))
+    if response_status == 200:
+        order_name = analysis.get("analysis").get("order_name")
+        analysis_status = analysis.get("analysis").get("detection_result")
+        analysis_report = analysis.get("analysis").get("detection_report")
+
+        analysis_report = dict(sorted(analysis_report.items(),
+                                      key=lambda x: x[0].lower()))
+        if analysis.get("detection_result"):
+            alaysis_photo = draw_detection_boxes(photo,
+                                                 analysis.get("detection_result"))
     else:
-        photo = base64.b64encode(photo).decode('utf-8')
+        analysis_status = analysis.get("detail")
 
     return render_template("analyse/summary.html",
-                           uploaded_photo=photo,
+                           uploaded_photo=alaysis_photo,
+                           order_name=order_name,
                            analysis_status=analysis_status,
                            analysis_report=analysis_report)

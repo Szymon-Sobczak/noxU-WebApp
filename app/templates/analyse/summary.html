@@ -7,11 +7,13 @@
   >Logout</a
 >
 {% endblock %} {% block content %}
-<div class="container mt-4">
-  <div class="row">
+<div class="container mt-4 d-flex align-items-center justify-content-center">
+  <div class="row justify-content-center">
+    {% if order_name %} {% if analysis_report %}
     <div class="col-md-6 text-center" style="overflow-y: auto">
-      <h2 class="baumans-header">Analysis Report:</h2>
-      <ul class="list-group">
+      <h2 class="baumans-header">Order {{ order_name }} analysis report:</h2>
+
+      <ul class="list-group d-block">
         {% for item, status in analysis_report.items() %}
         <div
           class="list-group-item {% if status == 'Ok.' %} list-group-item-success {% else %} list-group-item-danger {% endif %}"
@@ -25,21 +27,45 @@
         {% endfor %}
       </ul>
     </div>
+    {% else %}
+    <div
+      class="col-md-6 text-center d-flex justify-content-center align-items-center"
+      style="overflow-y: auto"
+    >
+      <div>
+        <h2 class="baumans-header">Order {{ order_name }} analysis report:</h2>
+        <h3 class="baumans-header">No order elements to display.</h3>
+      </div>
+    </div>
+    {% endif %} {% else %}
+    <div
+      class="col-md-6 text-center d-flex justify-content-center align-items-center"
+      style="overflow-y: auto"
+    >
+      <div>
+        <h2 class="baumans-header">Order unrecognized.</h2>
+        <h3 class="baumans-header">No order elements to display.</h3>
+      </div>
+    </div>
+    {% endif %}
 
     <div class="col-md-6">
       {% if uploaded_photo %}
-      <img
-        src="data:image/jpeg;base64,{{ uploaded_photo }}"
-        alt="Uploaded Photo"
-        style="
-          max-width: 100%;
-          height: auto;
-          border-radius: 20px;
-          box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-            0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        "
-        class="img-fluid"
-      />
+      <a href="#" onclick="toggleFullScreen('uploadedImage')">
+        <img
+          id="uploadedImage"
+          src="data:image/jpeg;base64,{{ uploaded_photo }}"
+          alt="Uploaded Photo"
+          style="
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+              0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          "
+          class="img-fluid"
+        />
+      </a>
       {% else %}
       <p>No photo uploaded</p>
       {% endif %}
@@ -71,4 +97,10 @@
     </div>
   </div>
 </div>
+<script>
+  function toggleFullScreen(imageId) {
+    var image = document.getElementById(imageId);
+    image.classList.toggle("full-screen-image");
+  }
+</script>
 {% endblock %}
