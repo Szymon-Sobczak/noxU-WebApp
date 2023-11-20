@@ -6,7 +6,7 @@ from flask import Blueprint
 from flask import current_app as app
 from flask import flash, redirect, render_template, request, session, url_for, send_file
 from flask_login import current_user, login_required, login_user, logout_user, UserMixin
-from forms.user_forms import LoginForm
+from forms.user_forms import LoginForm, DateTimeForm
 import qrcode
 import requests
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -32,16 +32,35 @@ def profile():
 
 
 @employee_bp.route('/orders/')
+@login_required
 def orders():
     backend_uri = app.config['BACKEND_URI']
-    response = requests.get(f"{backend_uri}/api/orders/list")
+    response = requests.get(f"{backend_uri}/api/orders/list/ordercontet")
     orders = json.loads(response.text)
+    for order in orders:
+        order["creation_date"] = datetime.strptime(
+            order["creation_date"], "%Y-%m-%dT%H:%M:%S")
+
     return render_template("employee/orders.html", orders=orders)
 
 
-@employee_bp.route('/generate_qrcode/<order_name>')
-def generate_qrcode(order_name):
+@employee_bp.route('/timelog/')
+@login_required
+def timelog():
+    form = DateTimeForm()
 
+    if form.validate_on_submit():
+        # Handle form submission here
+        selected_time_interval = form.time_interval_picker.data
+        print(selected_time_interval)
+        # Perform further processing with the selected time interval
+
+    return render_template('employee/timelog.html', form=form)
+
+
+@employee_bp.route('/generate_qrcode/<order_name>')
+@login_required
+def generate_qrcode(order_name):
     if order_name:
         qr = qrcode.QRCode(
             version=2,

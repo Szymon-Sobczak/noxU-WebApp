@@ -1,8 +1,14 @@
 {% extends 'base.html' %} {% block buttons%}
 <a
-  href="{{ url_for('account.logout' )}}"
+  href="{{ url_for('analyse.upload' )}}"
   class="btn btn-outline-primary custom-btn-yellow-outline d-flex"
-  style="margin-left: auto; margin-right: 20px; font-size: 20px"
+  type="button"
+  ><i class="backicon fa fa-arrow-left"></i
+></a>
+
+<a
+  href="{{ url_for('account.logout' )}}"
+  class="btn btn-outline-primary logout-btn-yellow d-flex"
   type="button"
   >Logout</a
 >

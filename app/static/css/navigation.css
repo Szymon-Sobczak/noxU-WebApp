@@ -39,7 +39,7 @@
     transition: background-color 0.3s;
   }
 
-.btn.custom-btn-yellow-outline:hover {
+.btn.custom-btn-yellow-outline:hover, .btn.custom-btn-yellow-outline:active, .btn.custom-btn-yellow-outline:active:focus {
     background-color: #ffdc00;
     border: 2px solid #ffdc00;
     color: #111111;
@@ -63,6 +63,25 @@
     color: #111111;
     
   }
+
+  .btn.back-btn-yellow {
+    border: 2px solid #ffdc00;
+    color: #ffdc00;
+    font-family: "Baumans", serif;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: auto; 
+    margin-right: 20px;
+    transition: background-color 0.3s;
+  }
+
+  .btn.back-btn-yellow:hover, .btn.back-btn-yellow:active, .btn.back-btn-yellow:active:focus  {
+    background-color: #ffdc00;
+    border: 2px solid #ffdc00;
+    color: #111111;
+    
+  }
+
 .btn.custom-btn-mainmenu {
     width: 100%;
     height: 300px;
@@ -91,6 +110,32 @@
   }
 
 
+
+  .btn.tablebtn-yellow {
+    width: 150px;
+    height: 100%;
+    border: none;
+    background-color: #ffdc00;
+    color: #111111;
+    font-family: "Baumans", serif;
+    font-weight: bold;
+    border-radius: 20px;
+    font-size: 36px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition: background-color 0.4s,;
+  }
+
+  .btn.tablebtn-yellow:hover, .btn.tablebtn-yellow:active, .tablebtn-yellow:active:focus {
+    background-color: #111111;
+  }
+
+
+
 #loader-overlay {
   position: fixed;
   top: 0;
@@ -111,6 +156,15 @@
 .icon {
     font-size: 84px;
     margin-bottom: 24px;
+  }
+
+  .tableicon {
+    font-size: 48px;
+
+  }
+  .backicon {
+    font-size: 24px;
+
   }
 
   .full-screen-image {
