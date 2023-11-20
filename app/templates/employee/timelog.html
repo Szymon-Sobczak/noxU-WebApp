@@ -47,6 +47,52 @@ buttons%}
     </div>
   </form>
 </div>
+
+<div class="container mt-5">
+  <h1 class="baumans-header">Order List:</h1>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead class="baumans-table-header">
+        <tr class="text-center">
+          <th>Order Name</th>
+          <th>Creation Date</th>
+          <th>Order Content</th>
+          <th>Generate QR Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <td>{{ order['order_name'] }}</td>
+          <td>{{ order['creation_date'] }}</td>
+          <td>
+            <ul>
+              {% for item in order['order_content'] %}
+              <li>
+                {{ item['items']['item_name'] }} (Quantity: {{ item['quantity']
+                }})
+              </li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td class="text-center align-middle">
+            <div class="d-flex justify-content-center align-items-center">
+              <a
+                class="btn btn-primary tablebtn-yellow"
+                style="font-size: 20px; white-space: nowrap"
+                href="{{ url_for('employee.generate_qrcode', order_name=order['order_name']) }}"
+              >
+                <i class="tableicon fa fa-qrcode"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <script>
   // Activate the date picker
   $(document).ready(function () {
