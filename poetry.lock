@@ -215,22 +215,6 @@ Flask = ">=0.8"
 visitor = "*"
 
 [[package]]
-name = "flask-datepicker"
-version = "0.14"
-description = "A Flask extension for jQueryUI DatePicker."
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "Flask-Datepicker-0.14.tar.gz", hash = "sha256:56a95039f463f39170bd6f443569e79027073c1b4b6d7fc89fea481102cf2c68"},
-    {file = "Flask_Datepicker-0.14-py3-none-any.whl", hash = "sha256:2cf18d8ca226023c3a93601494adb29da0a4a71113b47a9f83622c10ee85158f"},
-]
-
-[package.dependencies]
-Flask = "*"
-Flask-Bootstrap = "*"
-
-[[package]]
 name = "flask-login"
 version = "0.6.3"
 description = "User authentication and session management for Flask."
@@ -671,4 +655,4 @@ email = ["email-validator"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "ab9964672e1c59a95e9c1d737668a27a16592c3b4ffa392ea5d82a70ce60aadc"
+content-hash = "c07aa057eb3f8e05dc48a2042b8d1908b40e540519ad7949eb6a0f5e46a60d12"

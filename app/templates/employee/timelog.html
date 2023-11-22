@@ -17,89 +17,72 @@ buttons%}
 {% endblock %} {% block content %}
 
 <div class="container">
-  <h3>Select a date range</h3>
-
-  <form action="" method="POST" name="myform">
-    {{ form.csrf_token }}
-
-    <div class="form-row">
-      <div class="col-md-6">
-        <div class="form-group">
-          {{ form.startdate.label(class="control-label") }}
-          <div class="input-group date">
-            {{ form.startdate(class='form-control datepicker') }}
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="form-group">
-          {{ form.enddate.label(class="control-label") }}
-          <div class="input-group date">
-            {{ form.enddate(class='form-control datepicker') }}
-          </div>
-        </div>
-      </div>
+  <h2>Basic Date Time Picker</h2>
+    <div class='input-group date' id='picker'>
+      <input type='text' class="form-control" />
+      <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar"></span>	                
+     </span>
     </div>
-
-    <div class="form-group">
-      <p>{{ form.submit(class='btn btn-primary') }}</p>
-    </div>
-  </form>
 </div>
 
-<div class="container mt-5">
-  <h1 class="baumans-header">Order List:</h1>
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead class="baumans-table-header">
-        <tr class="text-center">
-          <th>Order Name</th>
-          <th>Creation Date</th>
-          <th>Order Content</th>
-          <th>Generate QR Code</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for order in orders %}
-        <tr>
-          <td>{{ order['order_name'] }}</td>
-          <td>{{ order['creation_date'] }}</td>
-          <td>
-            <ul>
-              {% for item in order['order_content'] %}
-              <li>
-                {{ item['items']['item_name'] }} (Quantity: {{ item['quantity']
-                }})
-              </li>
-              {% endfor %}
-            </ul>
-          </td>
-          <td class="text-center align-middle">
-            <div class="d-flex justify-content-center align-items-center">
-              <a
-                class="btn btn-primary tablebtn-yellow"
-                style="font-size: 20px; white-space: nowrap"
-                href="{{ url_for('employee.generate_qrcode', order_name=order['order_name']) }}"
-              >
-                <i class="tableicon fa fa-qrcode"></i>
-              </a>
-            </div>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <div class="container mt-5">
+      <form method="post" class="form-inline">
+          {{ form.hidden_tag() }}
+          <div class="form-group mb-2">
+              <div class="input-group">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text">Start Date</span>
+                  </div>
+                  {{ form.startdate(class="picker form-control", placeholder="YYYY-MM-DD") }}
+              </div>
+          </div>
+          <div class="form-group mx-sm-3 mb-2">
+              <div class="input-group">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text">End Date</span>
+                  </div>
+                  {{ form.enddate(class="picker form-control ", placeholder="YYYY-MM-DD") }}
+              </div>
+          </div>
+          {{ form.submit(class="btn btn-primary submit-yellow mb-2") }}
+      </form>
   </div>
-</div>
 
-<script>
-  // Activate the date picker
-  $(document).ready(function () {
-    $(".datepicker").datepicker({
-      format: "yyyy-mm-dd",
-      autoclose: true,
+
+  <div class="container mt-5">
+    <h1 class="baumans-header">Timelog:</h1>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="baumans-table-header">
+          <tr>
+            <th>Creation Date</th>
+            <th>Order Name</th>
+            <th>Status</th>
+            <th>Additional Info</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in timelog %}
+          <tr>
+            <td>{{ entry['creation_date'] }}</td>
+            <td>{{ entry['order_name'] }}</td>
+            <td class="text-center">{{ entry['status'] }}</td>
+            <td>
+              {% if entry['additional_info'] is not none %} {{
+              entry['additional_info'] }} {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    $(function () {
+      $('#picker').datetimepicker();
     });
-  });
-</script>
-{% endblock %}
+  </script>
+  {% endblock %}
+</div>
