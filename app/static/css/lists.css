@@ -1,19 +1,30 @@
 .list-group-item {
-    font-size: 24px; /* Adjust the font size */
-    border: 2px solid #ccc; /* Add a border to each list item */
-    margin-bottom: 8px; /* Add margin between list items */
+    font-size: 24px;
+    border: 2px solid #ccc; 
+    margin-bottom: 8px;
   }
 
-  /* Styles for 'ok' status */
+ 
   .list-group-item.list-group-item-success {
-    background-color: #d4edda; /* Change background color for 'ok' status */
-    border-color: #c3e6cb; /* Change border color for 'ok' status */
+    background-color: #d4edda; 
+    border-color: #c3e6cb;
   }
 
-  /* Styles for 'nok' status */
+
   .list-group-item.list-group-item-danger {
-    background-color: #f8d7da; /* Change background color for 'nok' status */
-    border-color: #f5c6cb; /* Change border color for 'nok' status */
+    background-color: #f8d7da; 
+    border-color: #f5c6cb;
+  }
+
+  .table-row-status-ok {
+    background-color: #28a745; 
+    border-color: #28a745;
+
+  }
+
+  .table-row-status-nok {
+    background-color: #f8d7da; 
+    border-color: #f5c6cb; 
   }
 
   .order-status-ok {

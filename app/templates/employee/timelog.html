@@ -15,41 +15,39 @@ buttons%}
 >
 
 {% endblock %} {% block content %}
-
-<div class="container">
-  <h2>Basic Date Time Picker</h2>
-    <div class='input-group date' id='picker'>
-      <input type='text' class="form-control" />
-      <span class="input-group-addon">
-      <span class="glyphicon glyphicon-calendar"></span>	                
-     </span>
-    </div>
-</div>
-
-  <div class="container mt-5">
-      <form method="post" class="form-inline">
-          {{ form.hidden_tag() }}
-          <div class="form-group mb-2">
+<div class="container mt-5">
+  <h1 class="baumans-header">Choose a period for the Timelog:</h1>
+  <form method="post" class="form">
+      {{ form.hidden_tag() }}
+      <div class="form-row">
+          <div class="form-group col-md-12 mb-2">
               <div class="input-group">
                   <div class="input-group-prepend">
                       <span class="input-group-text">Start Date</span>
                   </div>
-                  {{ form.startdate(class="picker form-control", placeholder="YYYY-MM-DD") }}
+                  {{ form.startdate(class="form-control picker", placeholder="YYYY-MM-DD") }}
               </div>
           </div>
-          <div class="form-group mx-sm-3 mb-2">
+      </div>
+      <div class="form-row">
+          <div class="form-group col-md-12 mb-2">
               <div class="input-group">
                   <div class="input-group-prepend">
                       <span class="input-group-text">End Date</span>
                   </div>
-                  {{ form.enddate(class="picker form-control ", placeholder="YYYY-MM-DD") }}
+                  {{ form.enddate(class="form-control picker", placeholder="YYYY-MM-DD") }}
               </div>
           </div>
-          {{ form.submit(class="btn btn-primary submit-yellow mb-2") }}
-      </form>
-  </div>
+      </div>
+      <div class="form-row">
+          <div class="form-group col-md-12">
+              {{ form.submit(class="btn btn-primary submit-yellow mb-2") }}
+          </div>
+      </div>
+  </form>
+</div>
 
-
+  {% if timelog %}
   <div class="container mt-5">
     <h1 class="baumans-header">Timelog:</h1>
     <div class="table-responsive">
@@ -64,7 +62,7 @@ buttons%}
         </thead>
         <tbody>
           {% for entry in timelog %}
-          <tr>
+          <tr class="{% if entry['status'] == 'ok' %} table-success {% else %} table-danger {% endif %}">
             <td>{{ entry['creation_date'] }}</td>
             <td>{{ entry['order_name'] }}</td>
             <td class="text-center">{{ entry['status'] }}</td>
@@ -78,10 +76,16 @@ buttons%}
       </table>
     </div>
   </div>
-
+  {% else %}
+  <div class="container mt-5 text-center">
+    <div class="d-flex align-items-center justify-content-center" style="min-height: 50vh;">
+      <h1 class="baumans-header">No data available for the time period.</h1>
+    </div>
+  </div>
+  {% endif %} 
   <script>
     $(function () {
-      $('#picker').datetimepicker();
+      $('#picker').datetimepicker({inline: true});
     });
   </script>
   {% endblock %}

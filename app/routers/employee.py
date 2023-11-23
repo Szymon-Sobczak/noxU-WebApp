@@ -55,13 +55,12 @@ def settings():
             user_id = current_user.user_json.get("user_id")
             request = requests.put(
                 url=f'{backend_uri}/api/users/{user_id}',
-                params={"user_name": current_user.user_json.get("user_name"),
-                        "password": password_form.new_password.data})
+                json={"password": password_form.new_password.data})
             if request.status_code != 200:
                 flash(f"Error: {request.text}")
             else:
                 flash("Password updated successfully!")
-                redirect(url_for('employee_bp.settings'))
+                redirect(url_for('employee.settings'))
         else:
             flash("Current password is incorrect.")
 
