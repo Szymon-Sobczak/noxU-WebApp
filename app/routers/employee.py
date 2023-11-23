@@ -4,9 +4,9 @@ import json
 
 from flask import Blueprint
 from flask import current_app as app
-from flask import flash, redirect, render_template, request, send_file, session, url_for
-from flask_login import current_user, login_required, login_user, logout_user, UserMixin
-from forms.user_forms import DateTimeForm, LoginForm, PasswordUpdateForm
+from flask import flash, redirect, render_template, send_file, url_for
+from flask_login import current_user, login_required,  UserMixin
+from forms.user_forms import DateTimeForm, PasswordUpdateForm
 import qrcode
 import requests
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -44,7 +44,7 @@ def orders():
     return render_template("employee/orders.html", orders=orders)
 
 
-@employee_bp.route('/admin/employees/new_password', methods=['GET', 'POST'])
+@employee_bp.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
     backend_uri = app.config['BACKEND_URI']
@@ -70,23 +70,31 @@ def settings():
 @employee_bp.route('/timelog/', methods=['GET', 'POST'])
 @login_required
 def timelog():
-    form = DateTimeForm()
-    backend_uri = app.config['BACKEND_URI']
-    user_id = current_user.user_json.get("user_id")
+    try:
+        form = DateTimeForm()
+        backend_uri = app.config['BACKEND_URI']
+        user_id = current_user.user_json.get("user_id")
 
-    start_date = ((datetime.now()-timedelta(days=1))
-                  .date()
-                  .strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3])
-    end_date = (datetime.combine(datetime.now().date(), datetime.max.time())
-                .strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3])
+        start_date = ((datetime.now()-timedelta(days=1))
+                      .date()
+                      .strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3])
+        end_date = (datetime.combine(datetime.now().date(), datetime.max.time())
+                    .strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3])
 
-    response = requests.get(f"{backend_uri}/api/production_log/list/timeseries/{user_id}",
-                            params={"min_timestamp": start_date,
-                                    "max_timestamp": end_date})
-    timelog = json.loads(response.text)
-    for entry in timelog:
-        entry["creation_date"] = datetime.strptime(
-            entry["creation_date"][:-7], "%Y-%m-%dT%H:%M:%S")
+        response = requests.get(f"{backend_uri}/api/production_log/list/timeseries/{user_id}",
+                                params={"min_timestamp": start_date,
+                                        "max_timestamp": end_date})
+        timelog = json.loads(response.text)
+
+        for entry in timelog:
+            entry["creation_date"] = datetime.strptime(
+                entry["creation_date"][:-7], "%Y-%m-%dT%H:%M:%S")
+
+        response = requests.get(f"{backend_uri}/api/users/list/")
+        users = json.loads(response.text)
+    except Exception as e:
+        flash(e)
+
     if form.validate_on_submit():
         try:
             start_date = (form.startdate.data
@@ -103,9 +111,9 @@ def timelog():
                     entry["creation_date"][:-7], "%Y-%m-%dT%H:%M:%S")
         except Exception as e:
             flash(e)
-        return render_template('employee/timelog.html', form=form, timelog=timelog)
+        return render_template('employee/timelog.html', form=form, timelog=timelog, users=users)
 
-    return render_template('employee/timelog.html', form=form, timelog=timelog)
+    return render_template('employee/timelog.html', form=form, timelog=timelog, users=users)
 
 
 @employee_bp.route('/generate_qrcode/<order_name>')

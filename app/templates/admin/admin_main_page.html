@@ -1,16 +1,55 @@
 {% extends 'base.html' %} {% block buttons%}
 <a
   href="{{ url_for('account.logout' )}}"
-  class="btn btn-outline-primary custom-btn-yellow-outline d-flex"
-  style="margin-right: 15px"
+  class="btn btn-outline-primary logout-btn-yellow d-flex"
   type="button"
   >Logout</a
 >
 {% endblock %} {% block content %}
-<div
-  class="container d-flex align-items-center justify-content-center"
-  style="height: 80vh"
->
-  <p>"ADMIN PAGE!"</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <a
+        href="{{ url_for('analyse.upload') }}"
+        class="btn btn-primary custom-btn-mainmenu-admin"
+      >
+        <i class="icon fa fa-camera"></i>
+        <span>Analyse Order</span>
+      </a>
+    </div>
+    <div class="col-md-6">
+      <a
+        href="{{ url_for('admin.timelog' )}}"
+        class="btn btn-primary custom-btn-mainmenu-admin"
+      >
+        <i class="icon fa fa-bars"></i>
+        <span>Timelog</span>
+      </a>
+    </div>
+    <div class="col-md-6">
+      <a
+        href="{{ url_for('admin.settings' )}}"
+        class="btn btn-primary custom-btn-mainmenu-admin"
+      >
+        <i class="icon fa fa-toolbox"></i>
+        <span>Settings</span>
+      </a>
+    </div>
+    <div class="col-md-6">
+      <a
+        href="{{ url_for('admin.orders' )}}"
+        class="btn btn-primary custom-btn-mainmenu-admin"
+      >
+        <i class="icon fa fa-box"></i>
+        <span>Orders</span>
+      </a>
+    </div>
+  </div>
+  <div
+    class="container d-flex justify-content-center"
+    style="font-size: 36px; color: #111111; font-family: 'Baumans', serif"
+  >
+    <p>Welcome back {{admin.user_name}}</p>
+  </div>
 </div>
 {% endblock %}
