@@ -67,8 +67,14 @@ buttons%}
             <td>{{ entry['order_name'] }}</td>
             <td class="text-center">{{ entry['status'] }}</td>
             <td>
-              {% if entry['additional_info'] is not none %} {{
-              entry['additional_info'] }} {% endif %}
+              {% if entry['additional_info'] is not none %}      
+              <ul>         
+              {% for key, value in entry['additional_info'].items() %}
+              {% if value != "Ok." %}
+              <li>{{ key }}: {{ value }}</li>
+              {% endif %}
+              {% endfor %} 
+              </ul>{% endif %}
             </td>
           </tr>
           {% endfor %}

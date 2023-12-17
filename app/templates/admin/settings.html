@@ -1,0 +1,130 @@
+{% extends 'base.html' %} {% block buttons%}
+<a
+  href="{{ url_for('account.login' )}}"
+  class="btn btn-outline-primary custom-btn-yellow-outline d-flex"
+  type="button"
+  ><i class="backicon fa fa-arrow-left"></i
+></a>
+
+<a
+  href="{{ url_for('account.logout' )}}"
+  class="btn btn-outline-primary logout-btn-yellow d-flex"
+  type="button"
+  >Logout</a
+>
+
+{% endblock %} {% block content %}
+
+<div class="container" style="margin-top: 10px">
+  <h1 class="baumans-header">User Password Update:</h1>
+
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="input-group col-md-12 mb-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text">User</span>
+      </div>
+      {{ form.user(class="form-control") }}
+    </div>
+
+    <div class="form-group row" style="margin-bottom: 10px">
+      <div class="col-sm-12">
+        {{ form.new_user_password.label(class="form-control-label") }} {{
+        form.new_user_password(class="form-control") }}
+      </div>
+    </div>
+
+    <div class="form-group row" style="margin-bottom: 10px">
+      <div class="col-sm-12">
+        {{ form.password.label(class="form-control-label") }} {{
+        form.password(class="form-control") }}
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-12">
+        {{ form.submit(class="btn btn-primary submit-yellow") }}
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" style="margin-top: 30px">
+  <h1 class="baumans-header">User Username Update:</h1>
+
+  <form method="POST">
+    {{ username_form.hidden_tag() }}
+
+    <div class="input-group col-md-12 mb-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text">User</span>
+      </div>
+      {{ username_form.user(class="form-control") }}
+    </div>
+
+    <div class="form-group row" style="margin-bottom: 10px">
+      <div class="col-sm-12">
+        {{ username_form.new_user_username.label(class="form-control-label") }}
+        {{ username_form.new_user_username(class="form-control") }}
+      </div>
+    </div>
+
+    <div class="form-group row" style="margin-bottom: 10px">
+      <div class="col-sm-12">
+        {{ form.password.label(class="form-control-label") }} {{
+        username_form.password(class="form-control") }}
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-12">
+        {{ username_form.submit(class="btn btn-primary submit-yellow") }}
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" style="margin-top: 30px">
+  <h1 class="baumans-header">User Visabillity Update:</h1>
+
+  <form method="POST">
+    {{ visablility_form.hidden_tag() }}
+
+    <div class="input-group col-md-12 mb-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text">User</span>
+      </div>
+      {{ visablility_form.user(class="form-control") }}
+    </div>
+
+    <div class="form-check form-switch custom-switch p-0">
+      <div class="d-flex flex-column-reverse gap-1">
+        <input
+          class="form-check-input ms-0"
+          type="checkbox"
+          role="switch"
+          id="switchCheckLabelTop"
+        />
+        <label class="form-check-label" for="switchCheckLabelTop"
+          >{{visablility_form.is_active.label}}</label
+        >
+      </div>
+    </div>
+
+    <div class="form-group row" style="margin-bottom: 10px">
+      <div class="col-sm-12">
+        {{ visablility_form.password.label(class="form-control-label") }} {{
+        visablility_form.password(class="form-control") }}
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-12">
+        {{ visablility_form.submit(class="btn btn-primary submit-yellow") }}
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

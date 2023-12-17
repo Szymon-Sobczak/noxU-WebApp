@@ -18,6 +18,7 @@ wtforms = "^3.1.1"
 flask-session = "^0.5.0"
 pillow = "^10.1.0"
 qrcode = "^7.4.2"
+flask-modals = "^0.5.1"
 
 [tool.isort]
 profile = "black"

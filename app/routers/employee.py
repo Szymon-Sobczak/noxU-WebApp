@@ -84,14 +84,13 @@ def timelog():
         response = requests.get(f"{backend_uri}/api/production_log/list/timeseries/{user_id}",
                                 params={"min_timestamp": start_date,
                                         "max_timestamp": end_date})
-        timelog = json.loads(response.text)
+        timelog_data = json.loads(response.text)
 
-        for entry in timelog:
+        for entry in timelog_data:
+            if entry['additional_info']:
+                entry['additional_info'] = json.loads(entry['additional_info'])
             entry["creation_date"] = datetime.strptime(
                 entry["creation_date"][:-7], "%Y-%m-%dT%H:%M:%S")
-
-        response = requests.get(f"{backend_uri}/api/users/list/")
-        users = json.loads(response.text)
     except Exception as e:
         flash(e)
 
@@ -105,15 +104,18 @@ def timelog():
             response = requests.get(f"{backend_uri}/api/production_log/list/timeseries/{user_id}",
                                     params={"min_timestamp": start_date,
                                             "max_timestamp": end_date})
-            timelog = json.loads(response.text)
-            for entry in timelog:
+            timelog_data = json.loads(response.text)
+            for entry in timelog_data:
+                if entry['additional_info']:
+                    entry['additional_info'] = json.loads(
+                        entry['additional_info'])
                 entry["creation_date"] = datetime.strptime(
                     entry["creation_date"][:-7], "%Y-%m-%dT%H:%M:%S")
         except Exception as e:
             flash(e)
-        return render_template('employee/timelog.html', form=form, timelog=timelog, users=users)
+        return render_template('employee/timelog.html', form=form, timelog=timelog_data)
 
-    return render_template('employee/timelog.html', form=form, timelog=timelog, users=users)
+    return render_template('employee/timelog.html', form=form, timelog=timelog_data)
 
 
 @employee_bp.route('/generate_qrcode/<order_name>')

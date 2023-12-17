@@ -188,6 +188,31 @@
     background-color: #111111;
   }
 
+
+  .btn.increment-decrement-btn-yellow {
+    border: none;
+    background-color: #ffdc00;
+    color: #111111;
+    font-family: "Baumans", serif;
+    font-weight: bold;
+    border-radius: 20px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition: background-color 0.4s,;
+  }
+
+
+  .btn.increment-decrement-btn-yellow:hover, .btn.increment-decrement-btn-yellow:active, .increment-decrement-btn-yellow:active:focus {
+    background-color: #111111;
+    color: white;
+  }
+
+
+
 #loader-overlay {
   position: fixed;
   top: 0;
@@ -235,3 +260,18 @@
     max-height: 100vh;
     border-radius: 0 !important;
   }
+
+
+  .form-switch.custom-switch .form-check-input{
+    height: 2rem;
+    width: calc(3rem + 0.75rem);
+    border-radius: 4rem;
+  }
+
+
+  .form-switch.custom-switch .form-check-input:checked {
+      background-color: #ffdc00; 
+      border-color: #ffdc00;
+  }
+
+

@@ -1,0 +1,144 @@
+{% extends 'base.html' %} {% block buttons%}
+<a
+  href="{{ url_for('account.login' )}}"
+  class="btn btn-outline-primary custom-btn-yellow-outline d-flex"
+  type="button"
+  ><i class="backicon fa fa-arrow-left"></i
+></a>
+
+<a
+  href="{{ url_for('account.logout' )}}"
+  class="btn btn-outline-primary logout-btn-yellow d-flex"
+  type="button"
+  >Logout</a
+>
+
+{% endblock %} {% block content %}
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title baumans-heade fs-5" id="exampleModalLabel">Add New Order</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <h1 class="baumans-header" style="margin-bottom: 20px;">Select Items Quantities:</h1>
+
+          {% for item in items %}
+            <div class="input-group mb-3">
+                <span class="input-group-text d-flex justify-content-center w-300" style="width: 300px;"> {{ item }}</span>
+                <button class="btn increment-decrement-btn-yellow rounded-start" type="button" onclick="decrement('{{ item }}')"> <i class="fa fa-minus"></i></button>
+                <input type="text" class="form-control text-center" id="{{ item }}_quantity" value="0">
+                <button class="btn increment-decrement-btn-yellow rounded-end" type="button" onclick="increment('{{ item }}')"><i class="fa fa-plus"></i></button>
+            </div>
+          {% endfor %}
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary submit-yellow">Submit New Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  {% if orders %}
+  <div class="container mt-5">
+    <h1 class="baumans-header">Order List:</h1>
+    <button
+    type="button"
+    class="btn btn-primary submit-yellow"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+  >
+    Add New Order 
+  </button>
+
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="baumans-table-header">
+          <tr class="text-center">
+            <th>Order Name</th>
+            <th>Creation Date</th>
+            <th>Order Content</th>
+            <th>Generate QR Code</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td>{{ order['order_name'] }}</td>
+            <td>{{ order['creation_date'] }}</td>
+            <td>
+              <ul>
+                {% for item in order['order_content'] %}
+                <li>
+                  {{ item['items']['item_name'] }} (Quantity: {{
+                  item['quantity'] }})
+                </li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td class="text-center align-middle">
+              <div class="d-flex justify-content-center align-items-center">
+                <a
+                  class="btn btn-primary tablebtn-yellow"
+                  style="font-size: 20px; white-space: nowrap"
+                  href="{{ url_for('employee.generate_qrcode', order_name=order['order_name']) }}"
+                >
+                  <i class="tableicon fa fa-qrcode"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <div class="container mt-5 text-center">
+    <div
+      class="d-flex align-items-center justify-content-center"
+      style="min-height: 50vh"
+    >
+      <h1 class="baumans-header">No orders available.</h1>
+    </div>
+  </div>
+  {% endif %}
+
+  <script>
+        var interval;
+
+        function increment(item) {
+            var input = document.getElementById(item + "_quantity");
+            input.value = parseInt(input.value) + 1;
+        }
+
+        function decrement(item) {
+            var input = document.getElementById(item + "_quantity");
+            var value = parseInt(input.value) - 1;
+            input.value = value >= 0 ? value : 0;
+        }
+
+        function submitForm() {
+            // Perform any necessary form submission logic here
+            alert("Form submitted!");
+        }
+    </script>
+  {% endblock %}
+</div>

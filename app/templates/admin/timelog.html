@@ -1,0 +1,115 @@
+{% extends 'base.html' %} {% import "bootstrap/wtf.html" as wtf %} {% block
+    buttons%}
+    <a
+      href="{{ url_for('account.login' )}}"
+      class="btn btn-outline-primary custom-btn-yellow-outline d-flex"
+      type="button"
+      ><i class="backicon fa fa-arrow-left"></i
+    ></a>
+    
+    <a
+      href="{{ url_for('account.logout' )}}"
+      class="btn btn-outline-primary logout-btn-yellow d-flex"
+      type="button"
+      >Logout</a
+    >
+    
+    {% endblock %} {% block content %}
+
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    <div class="container mt-5">
+      <h1 class="baumans-header">Choose a period and user for the Timelog:</h1>
+      <form method="post" class="form">
+          {{ form.hidden_tag() }}
+          <div class="form-row">
+            <div class="input-group col-md-12 mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">User</span>
+                </div>
+                {{ form.user(class="form-control") }}
+            </div>
+        </div>
+          <div class="form-row">
+              <div class="form-group col-md-12 mb-2">
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">Start Date</span>
+                      </div>
+                      {{ form.startdate(class="form-control picker", placeholder="YYYY-MM-DD") }}
+                  </div>
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-12 mb-2">
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">End Date</span>
+                      </div>
+                      {{ form.enddate(class="form-control picker", placeholder="YYYY-MM-DD") }}
+                  </div>
+              </div>
+          </div>
+          
+          <div class="form-row">
+              <div class="form-group col-md-12">
+                  {{ form.submit(class="btn btn-primary submit-yellow mb-2") }}
+              </div>
+          </div>
+      </form>
+    </div>
+    
+      {% if timelog %}
+      <div class="container mt-5">
+        <h1 class="baumans-header">Timelog:</h1>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="baumans-table-header">
+              <tr>
+                <th>Creation Date</th>
+                <th>Order Name</th>
+                <th>Status</th>
+                <th>Additional Info</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for entry in timelog %}
+              <tr class="custom-border {% if entry['status'] == 'ok' %} table-success {% else %} table-danger {% endif %}">
+                <td>{{ entry['creation_date'] }}</td>
+                <td>{{ entry['order_name'] }}</td>
+                <td class="text-center">{{ entry['status'] }}</td>
+                <td>
+                  {% if entry['additional_info'] is not none %}      
+                  <ul>         
+                  {% for key, value in entry['additional_info'].items() %}
+                  {% if value != "Ok." %}
+                  <li>{{ key }}: {{ value }}</li>
+                  {% endif %}
+                  {% endfor %} 
+                  </ul>{% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% else %}
+      <div class="container mt-5 text-center">
+        <div class="d-flex align-items-center justify-content-center" style="min-height: 50vh;">
+          <h1 class="baumans-header">No data for selected user available for the time period.</h1>
+        </div>
+      </div>
+      {% endif %} 
+      <script>
+        $(function () {
+          $('#picker').datetimepicker({inline: true});
+        });
+      </script>
+      {% endblock %}
+    </div>
+    
